@@ -1,0 +1,24 @@
+{
+  "updated": "2026-11-12",
+  "picks": [
+    {
+      "month": "2026-11",
+      "label": "November 2026",
+      "number": 535,
+      "title": "Responding to Common Patient Concerns for the Fentanyl Patch",
+      "url": "https://www.mypcnow.org/fast-fact/responding-to-common-patient-concerns-for-the-fentanyl-patch/",
+      "authors": "Lukman Z, Maharaj R, Marks S, Schuh MJ",
+      "published": "May 2026",
+      "intro": "Transdermal fentanyl is a sensible long-acting choice for opioid-tolerant patients who can't swallow, have an upper GI obstruction, have renal failure or don't tolerate other opioids. Patients and families often distrust it, so this Fast Fact covers how to answer their most common questions.",
+      "points": [
+        {"h": "Fear tied to the overdose crisis", "t": "Ask what the patient has heard about fentanyl and acknowledge the fear, especially in families affected by addiction or overdose. Then explain how a supervised prescription differs from illicit fentanyl. Fears left unaddressed can hurt adherence."},
+        {"h": "Storage and disposal", "t": "Advise locked storage and safe handling. Dispose of used patches through take-back programs, or fold them and flush them where local rules allow. Consider co-prescribing intranasal naloxone."},
+        {"h": "MRI", "t": "Some patches must come off before an MRI because of burn risk. Put a new patch on a different site afterward. The long half-life usually keeps pain controlled during the scan."},
+        {"h": "Handling and daily life", "t": "Anyone else touching a patch should wear gloves and wash their hands afterward. Never cut a patch, and replace one that falls off. Bathing and swimming are fine, but avoid saunas, heating pads and other external heat because they increase absorption."},
+        {"h": "Sweating and skin reactions", "t": "For heavy sweaters, try the inner upper arm or thigh and secure the patch with a nonocclusive dressing. Mild redness or itching is common and usually responds to rotating sites, washing with water or hydrocortisone. Rule out true allergy."},
+        {"h": "Cachexia", "t": "Little subcutaneous fat makes absorption less predictable. The patch can still be valuable near the end of life when oral options are gone, but titrate cautiously and monitor closely."}
+      ],
+      "pearl": "Naloxone wears off before fentanyl does. If naloxone is given, call EMS or hospice even if the patient seems to recover. Fever and heat exposure can raise fentanyl levels."
+    }
+  ]
+}

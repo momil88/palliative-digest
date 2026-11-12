@@ -1,0 +1,61 @@
+{
+  "updated": "2026-11-12",
+  "show": {
+    "name": "GeriPal – A Geriatrics and Palliative Medicine Podcast",
+    "hosts": "Eric Widera & Alex Smith (UCSF)",
+    "apple": "https://podcasts.apple.com/us/podcast/geripal/id1164272877",
+    "spotify_search": "https://open.spotify.com/search/GeriPal",
+    "site": "https://geripal.org",
+    "cme": "CME/MOC credit (AMA PRA Category 1) is available for many episodes at geripal.org."
+  },
+  "episodes": [
+    {
+      "id": "43644269",
+      "date": "2026-11-05",
+      "title": "Geriatrics for the Masses: Rafael Duncan, Ellie Fishbein, Patty Lee, Sam Ing, & Stephanie Rogers",
+      "page": "https://geripal.libsyn.com/geriatrics-for-the-masses-rafael-duncan-ellie-fishbein-patty-lee-sam-ing-stephanie-rogers",
+      "embed": "https://html5-player.libsyn.com/embed/episode/id/43644269/height/90/theme/custom/thumbnail/yes/direction/forward/render-playlist/no/custom-color/2f5d62/",
+      "synopsis": "Eric and Alex talk with clinicians who teach geriatrics on social media and in podcasts. Rafael's GeriClass offers Portuguese-language lessons, Ellie's Geriatrics in Real Life is on TikTok and Instagram, Patty Lee and Sam Ing's VeriGeri podcast is aimed at trainees, and Stephanie Rogers writes Age Well with Dr. Steph across several platforms. They cover how each got started, who they're trying to reach, how they square this work with criticism of social media, and advice for clinicians who want to start.",
+      "listen_for": [
+        "How to reach trainees, older adults and caregivers outside journals",
+        "Weighing social-media outreach against its downsides",
+        "Recommended geriatrics and pharmacy accounts to follow"
+      ],
+      "note": "These show notes list the discussion questions but not the guests' answers, so this synopsis covers the topics rather than the conclusions."
+    },
+    {
+      "id": "43521194",
+      "date": "2026-10-29",
+      "title": "The Long-Lasting Effects of Delirium: Tammy Hshieh, Ed Marcantonio, & Thiago Avelino-Silva",
+      "page": "https://geripal.libsyn.com/the-long-lasting-effects-of-delirium-tammy-hshieh-ed-marcantonio-thiago-avelino-silva",
+      "embed": "https://html5-player.libsyn.com/embed/episode/id/43521194/height/90/theme/custom/thumbnail/yes/direction/forward/render-playlist/no/custom-color/2f5d62/",
+      "synopsis": "Three delirium researchers debate whether delirium directly speeds up long-term cognitive decline or mostly reveals existing frailty. They discuss a 5-year postoperative cohort in JAMA Internal Medicine in which frailty, measured by rehospitalization, didn't explain the later decline. That argues against delirium simply 'unmasking' vulnerability. They also cover which screening tool to use, how frailty fits in, the new CMS Age-Friendly delirium measure, and a JAGS trial in which proactive geriatrics consultation cut delirium after hip fracture by more than a third.",
+      "listen_for": [
+        "Is delirium a cause or a marker of cognitive decline?",
+        "Choosing a delirium screening tool",
+        "Prevention: proactive geriatrics consultation in hip fracture"
+      ]
+    },
+    {
+      "id": "43395604",
+      "date": "2026-10-22",
+      "title": "How Can We Improve Surgery for Older Adults? Unpacking the ACS Geriatric Surgery Verification Program",
+      "page": "https://geripal.libsyn.com/how-can-we-improve-surgery-for-older-adults-unpacking-the-acs-geriatric-surgery-verification-program",
+      "embed": "https://html5-player.libsyn.com/embed/episode/id/43395604/height/90/theme/custom/thumbnail/yes/direction/forward/render-playlist/no/custom-color/2f5d62/"
+    },
+    {
+      "id": "43298699",
+      "date": "2026-10-15",
+      "title": "Can We Prevent Cognitive Decline in Aging? Multi-Domain Trials with Laura Baker and Ellen Binder",
+      "page": "https://geripal.libsyn.com/can-we-prevent-cognitive-decline-in-aging-multi-domain-trials-with-laura-baker-and-ellen-binder",
+      "embed": "https://html5-player.libsyn.com/embed/episode/id/43298699/height/90/theme/custom/thumbnail/yes/direction/forward/render-playlist/no/custom-color/2f5d62/"
+    },
+    {
+      "id": "43217858",
+      "date": "2026-10-08",
+      "title": "When to Start or Stop Statins in Older Adults: Tim Anderson, Rita Redberg, Mike Rich",
+      "page": "https://geripal.libsyn.com/when-to-start-or-stop-statins-in-older-adults-tim-anderson-rita-redberg-mike-rich",
+      "embed": "https://html5-player.libsyn.com/embed/episode/id/43217858/height/90/theme/custom/thumbnail/yes/direction/forward/render-playlist/no/custom-color/2f5d62/"
+    }
+  ]
+}
