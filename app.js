@@ -27,7 +27,7 @@ function links(p) {
 }
 function card(p, label) {
   return `<article class="card ${p.featured ? "f" : ""}">
-    <div class="tags"><span class="tag t">${esc(p.topic)}</span><span class="tag">${esc(p.design)}${p.n ? " · n=" + esc(p.n) : ""}</span><span class="tag ev-${esc(p.evidence)}">${esc(p.evidence)} evidence</span>${label ? `<span class="tag">${esc(label)}</span>` : ""}</div>
+    <div class="tags"><span class="tag t">${esc(p.topic)}</span><span class="tag ev-${esc(p.evidence)}">${esc(p.evidence)} evidence</span>${label ? `<span class="tag">${esc(label)}</span>` : ""}</div>
     <h3>${esc(p.title)}</h3>
     <div class="cite"><i>${esc(p.journal)}</i> · ${esc(fmtDate(p.date))} · ${esc(p.authors)}</div>
     <div class="bl"><b>Bottom line:</b> ${esc(p.bottom_line)}</div>
