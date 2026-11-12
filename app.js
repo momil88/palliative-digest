@@ -52,7 +52,6 @@ function renderIssue(issue, { showBack = false } = {}) {
   let h = showBack ? `<button class="back" data-back>‹ All issues</button>` : installHint();
   h += `<div class="kicker">${esc(issue.label)}</div><h1 class="sec">Literature digest</h1>
     <div class="meta">${esc(issue.window)} · ${issue.screened} screened · ${issue.papers.length} summarized</div>
-    <div class="note"><div class="kicker">Overview</div><p>${esc(issue.editor_note)}</p></div>
     <div class="chips">${["", ...topicsOf(issue)].map(x => `<button class="chip ${x === t ? "on" : ""}" data-topic="${esc(x)}">${x ? esc(x) : "All"}</button>`).join("")}</div>`;
   if (feat.length) h += `<h2 class="grp">Most practice-relevant <small>${feat.length}</small></h2>` + feat.map(p => card(p)).join("");
   Object.keys(groups).sort().forEach(k => h += `<h2 class="grp">${esc(k)} <small>${groups[k].length}</small></h2>` + groups[k].map(p => card(p)).join(""));
@@ -109,18 +108,82 @@ function fastfact() {
 function podcast() {
   const P = S.pod, e = P.episodes[0];
   const spot = t => "https://open.spotify.com/search/" + encodeURIComponent("GeriPal " + t.split(":")[0]);
+  const ctl = x => `<div class="pl" data-ep="${esc(x.id)}">
+      <button class="pp" aria-label="Play">${ICON.play}</button>
+      <div class="pl-mid"><input type="range" class="seek" min="0" max="1000" value="0" aria-label="Seek"><div class="times"><span class="cur">0:00</span><span class="dur">${esc(x.duration || "")}</span></div></div>
+      <button class="spd" aria-label="Playback speed">${fmtRate(rate)}</button>
+    </div>`;
   const ep = (x, big) => `
-    ${big ? `<div class="kicker">Latest episode · ${esc(fmtDate(x.date))}</div><h1 class="sec">${esc(x.title)}</h1>` : `<h3 style="font:650 15.5px/1.35 'Source Serif 4',Georgia,serif;margin:0">${esc(x.title)}</h3><div class="meta">${esc(fmtDate(x.date))}</div>`}
-    <iframe class="player" src="${esc(x.embed)}" loading="lazy" title="Play ${esc(x.title)}" allow="autoplay; encrypted-media" scrolling="no"></iframe>
+    ${big ? `<div class="kicker">Latest episode · ${esc(fmtDate(x.date))}</div><h1 class="sec">${esc(x.title)}</h1>` : `<h3 class="ep-t">${esc(x.title)}</h3><div class="meta">${esc(fmtDate(x.date))}</div>`}
+    ${x.audio ? ctl(x) : ""}
     ${x.synopsis ? `<p>${esc(x.synopsis)}</p>` : ""}
     ${x.listen_for ? `<div class="pearl"><b>Listen for:</b><ul class="lf">${x.listen_for.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>` : ""}
     ${x.note ? `<div class="fine">${esc(x.note)}</div>` : ""}
     <div class="links"><a href="${esc(spot(x.title))}" ${ext}>Spotify</a><a href="${esc(P.show.apple)}" ${ext}>Apple Podcasts</a><a href="${esc(x.page)}" ${ext}>Show notes</a></div>`;
-  let h = `<div class="card f">${ep(e, true)}</div><h2 class="grp">Recent episodes</h2>` +
+  $("#view").innerHTML = `<div class="card f">${ep(e, true)}</div><h2 class="grp">Recent episodes</h2>` +
     P.episodes.slice(1).map(x => `<div class="card">${ep(x, false)}</div>`).join("") +
     `<div class="fine">${esc(P.show.name)}, hosted by ${esc(P.show.hosts)}. ${esc(P.show.cme)}</div>`;
-  $("#view").innerHTML = h;
+  document.querySelectorAll(".pl").forEach(el => {
+    const x = P.episodes.find(q => q.id === el.dataset.ep);
+    el.querySelector(".pp").onclick = () => togglePlay(x);
+    el.querySelector(".spd").onclick = cycleRate;
+    const sk = el.querySelector(".seek");
+    sk.oninput = () => { if (cur && cur.id === x.id && audio.duration) audio.currentTime = sk.value / 1000 * audio.duration; };
+  });
+  syncUI();
 }
+
+/* ---------- audio player ---------- */
+const ICON = {
+  play: '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" width="22" height="22"><rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>'
+};
+const RATES = [1, 1.25, 1.5, 1.75, 2];
+const audio = new Audio(); audio.preload = "none";
+let cur = null, rate = 1;
+try { rate = parseFloat(localStorage.getItem("pd_rate")) || 1; } catch (e) {}
+const fmtRate = r => (r % 1 ? r : r.toFixed(0)) + "×";
+const fmtT = t => { if (!isFinite(t)) return "0:00"; t = Math.floor(t); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = String(t % 60).padStart(2, "0"); return h ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`; };
+const savePos = () => { if (cur && audio.currentTime > 5) try { localStorage.setItem("pd_pos_" + cur.id, String(audio.currentTime)); } catch (e) {} };
+
+function togglePlay(x) {
+  if (cur && cur.id === x.id) { audio.paused ? audio.play() : audio.pause(); return; }
+  savePos(); cur = x; audio.src = x.audio; audio.playbackRate = rate;
+  let pos = 0; try { pos = parseFloat(localStorage.getItem("pd_pos_" + x.id)) || 0; } catch (e) {}
+  audio.addEventListener("loadedmetadata", () => { if (pos && pos < audio.duration - 10) audio.currentTime = pos; audio.playbackRate = rate; }, { once: true });
+  audio.play().catch(() => {});
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({ title: x.title, artist: "GeriPal", album: "GeriPal Podcast", artwork: [{ src: "icons/icon-512.png", sizes: "512x512", type: "image/png" }] });
+    navigator.mediaSession.setActionHandler("play", () => audio.play());
+    navigator.mediaSession.setActionHandler("pause", () => audio.pause());
+    navigator.mediaSession.setActionHandler("seekbackward", () => audio.currentTime = Math.max(0, audio.currentTime - 15));
+    navigator.mediaSession.setActionHandler("seekforward", () => audio.currentTime += 30);
+  }
+  syncUI();
+}
+function cycleRate() {
+  rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length] || 1;
+  audio.playbackRate = rate; try { localStorage.setItem("pd_rate", String(rate)); } catch (e) {}
+  document.querySelectorAll(".spd").forEach(b => b.textContent = fmtRate(rate));
+}
+function syncUI() {
+  document.querySelectorAll(".pl").forEach(el => {
+    const on = cur && cur.id === el.dataset.ep;
+    el.classList.toggle("active", !!on);
+    el.querySelector(".pp").innerHTML = on && !audio.paused ? ICON.pause : ICON.play;
+    el.querySelector(".pp").setAttribute("aria-label", on && !audio.paused ? "Pause" : "Play");
+    if (on) {
+      el.querySelector(".cur").textContent = fmtT(audio.currentTime);
+      if (audio.duration) { el.querySelector(".dur").textContent = "−" + fmtT((audio.duration - audio.currentTime) / audio.playbackRate); el.querySelector(".seek").value = audio.currentTime / audio.duration * 1000; }
+      el.querySelector(".seek").style.setProperty("--p", (audio.duration ? audio.currentTime / audio.duration * 100 : 0) + "%");
+    }
+  });
+}
+["play", "pause", "timeupdate", "loadedmetadata", "ratechange", "ended"].forEach(ev => audio.addEventListener(ev, syncUI));
+audio.addEventListener("pause", savePos);
+audio.addEventListener("waiting", () => { const el = cur && document.querySelector(`.pl[data-ep="${cur.id}"] .pp`); if (el) el.classList.add("loading"); });
+audio.addEventListener("playing", () => document.querySelectorAll(".pp.loading").forEach(b => b.classList.remove("loading")));
+setInterval(() => { if (!audio.paused) savePos(); }, 15000);
 
 /* ---------- install hint ---------- */
 function installHint() {

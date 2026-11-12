@@ -1,5 +1,5 @@
 // Offline support: app shell cache-first, data network-first (falls back to the last copy).
-const SHELL = "pd-shell-v1";
+const SHELL = "pd-shell-v2";
 const DATA = "pd-data";
 const ASSETS = ["./", "index.html", "app.css", "app.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 
